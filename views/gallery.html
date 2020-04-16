@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>AC Photo Gallery</title>
+  <link rel="stylesheet" type="text/css" href="/css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.0.2/fullpage.css" />
+</head>
+<body>
+  <div id="fullpage">
+    <div class="section s1">
+      <h1>Home Decoration</h1>
+    </div>
+    <div class="section s2">
+      <h1>Different Styles</h1>
+      <div class="description">
+        <p> Lorem ipsuem sdlfjsleijflskdjf ksM </p>
+        <p> Lorem ipsuem sdlfjsleijflskdjf ksM </p>
+      </div>
+      <img src="/images/colorwheel.jpg" alt="colorwheel" class="colorimage"/>
+      <img src="/images/mixingcolors.jpg" alt="colorwheel" class="colorimage" />
+    </div>
+    <div class="section s3">
+        <h1>Other</h1>
+        <img src="/images/mixingcolors.jpg" alt="colorwheel" class="colorimage" />
+     </div>
+   </div>
+
+  <!-- <div class="header">
+    <h1>Photo Gallery</h1>
+    <ul class="menu">
+      <li class="menuitem"><a href="/">Home</a></li>
+      <li class="menuitem active"><a href="/gallery">Gallery</a></li>
+      <li class="menuitem"><a href="/about">About</a></li>
+      <li class="menuitem"><a href="/journal">Journal</a></li>
+    </ul>
+  </div>
+  <div id="gallery"></div>
+  <div id="output"></div>
+  <div class="footer"></div> -->
+
+<!-- <input type="file" id="files" name="files[]" multiple />
+<output id="list"></output>
+<button onclick=getText()>GetText</button>
+<button onclick=getUsers()>GetUsers</button>
+
+<button onclick=getImages()>GetImages</button> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TimelineMax.min.js" integrity="sha256-v/YsEqWkVsiNHryCWg+vjC/eDBakMAgOsCJRa0kNPOg=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js" integrity="sha256-ABrLsV2caVEMCBfm3eNhv/CYQG+tGCqzw2f4b/Pag0M=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fullPage.js/3.0.2/fullpage.min.js"></script>
+<script src="/scripts/gallery.js"></script>
+<!-- <script src="/scripts/gallery.js"></script> -->
+<!-- <script>
+
+function getImages() {
+  fetch('/api')
+    .then((res) => res.json())
+    .then((data) => {
+      let output = '';
+      for (i in data) {
+        output += "<div class='picture-div'><img class='picture-image' src='images/gallery/" + data[i] + "' /></div>";
+      }
+      document.getElementById('gallery').innerHTML = output;
+    });
+}
+
+</script>
+<script>
+  function getUsers() {
+    fetch('user.json')
+      .then((res) => res.json())
+      .then((data) => {
+        let output = '<h2>Users<h2>';
+        data.forEach(function(user){
+          output += `
+          <ul>
+            <li>ID: ${user.id}</li>
+            <li>Name: ${user.name}</li>
+            <li>Email: ${user.email}</li>
+          </ul>
+          `;
+        });
+        document.getElementById('output').innerHTML = output;
+      });
+
+  }
+
+  function getText() {
+    // fetch('sample.txt')
+    // .then(function(res){
+    //   console.log(res);
+    // })
+    // .then(function(data){
+    //   console.log(data);
+    // })
+    fetch('sample.txt')
+    .then((res) => console.log(res.text()))
+    .then((data) => console.log(data))
+    .catch((err) => console.log(err))
+  }
+
+  function handleFileSelect(evt) {
+    var files = evt.target.files; // FileList object
+
+    // files is a FileList of File objects. List some properties.
+    var output = [];
+    for (var i = 0, f; f = files[i]; i++) {
+      output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+                f.size, ' bytes, last modified: ',
+                f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
+                '</li>');
+    }
+    document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
+    // show images
+    var ps = [];
+    var g = document.getElementById("gallery");
+      for (var i = 0, f; f = files[i]; i++) {
+        if(f.type == 'video/mp4'){
+          var d = document.createElement("div");
+          d.className = "movie-div";
+          d.id = "movie-" + i;
+          d.innerHTML = "<video class='movie-clip' controls> <source src=\'images/gallery/" + f.name + "\' ></video>";
+          g.appendChild(d);
+        }
+        else{
+        var d = document.createElement("div");
+        d.className = "picture-div";
+        d.id = "picture-" + i;
+        d.innerHTML = "<img class='picture-image' src=\'images/gallery/" + f.name + "\' />";
+        g.appendChild(d);
+      }
+    }
+  }
+
+  //document.getElementById('files').addEventListener('change', handleFileSelect, false);
+
+</script>
+<script>
+  // function initPage() {
+  //   getImages();
+  // }
+  // initPage();
+</script> -->
+</body>
+</html>

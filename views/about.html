@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>April</title>
+  <link rel="stylesheet" type="text/css" href="/css/style.css" />
+</head>
+<body>
+  <div class="header">
+    <h1>About</h1>
+    <ul class="menu">
+      <li class="menuitem"><a href="/">Home</a></li>
+      <li class="menuitem"><a href="/gallery">Gallery</a></li>
+      <li class="menuitem active"><a href="/about">About</a></li>
+      <li class="menuitem"><a href="/journal">Journal</a></li>
+    </ul>
+  </div>
+  <div id="gallery">
+      <p>
+        <strong>Hi everyone!</strong></br>
+        Thank you for visiting my page.
+        This experimental blog is meant for your enjoyment and for my learning.</br>
+        Please feel free to tour around and hopefully you'll find something interesting!</br>
+      - April
+    </p>
+  </div>
+  <div id="output"></div>
+  <div class="footer"></div>
+
+<!-- <input type="file" id="files" name="files[]" multiple /> -->
+<!-- <output id="list"></output> -->
+<!-- <button onclick=getText()>GetText</button> -->
+<!-- <button onclick=getUsers()>GetUsers</button> -->
+<!-- <button onclick=getImages()>GetImages</button> -->
+
+<script>
+
+function getImages() {
+  fetch('/api')
+    .then((res) => res.json())
+    .then((data) => {
+      let output = '';
+      for (i in data) {
+        output += "<img class='picture-image' src='images/gallery/" + data[i] + "' />";
+      }
+      document.getElementById('gallery').innerHTML = output;
+    });
+}
+
+</script>
+<script>
+  function getUsers() {
+    fetch('user.json')
+      .then((res) => console.log(res.json()))
+      .then((data) => {
+        let output = '<h2>Users<h2>';
+        data.forEach(function(user){
+          output += `
+          <ul>
+            <li>ID: ${user.id}</li>
+            <li>Name: ${user.name}</li>
+            <li>Email: ${user.email}</li>
+          </ul>
+          `;
+        });
+        document.getElementById('output').innerHTML = output;
+      });
+
+  }
+
+  function getText() {
+    // fetch('sample.txt')
+    // .then(function(res){
+    //   console.log(res);
+    // })
+    // .then(function(data){
+    //   console.log(data);
+    // })
+    fetch('sample.txt')
+    .then((res) => console.log(res.text()))
+    .then((data) => console.log(data))
+    .catch((err) => console.log(err))
+  }
+
+  function handleFileSelect(evt) {
+    var files = evt.target.files; // FileList object
+
+    // files is a FileList of File objects. List some properties.
+    var output = [];
+    for (var i = 0, f; f = files[i]; i++) {
+      output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+                f.size, ' bytes, last modified: ',
+                f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
+                '</li>');
+    }
+    document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
+    // show images
+    var ps = [];
+    var g = document.getElementById("gallery");
+      for (var i = 0, f; f = files[i]; i++) {
+        if(f.type == 'video/mp4'){
+          var d = document.createElement("div");
+          d.className = "movie-div";
+          d.id = "movie-" + i;
+          d.innerHTML = "<video class='movie-clip' controls> <source src=\'images/gallery/" + f.name + "\' ></video>";
+          g.appendChild(d);
+        }
+        else{
+        var d = document.createElement("div");
+        d.className = "picture-div";
+        d.id = "picture-" + i;
+        d.innerHTML = "<img class='picture-image' src=\'images/gallery/" + f.name + "\' />";
+        g.appendChild(d);
+      }
+    }
+  }
+
+  document.getElementById('files').addEventListener('change', handleFileSelect, false);
+
+</script>
+<script>
+  function initPage() {
+
+  }
+  initPage();
+</script>
+</body>
+</html>

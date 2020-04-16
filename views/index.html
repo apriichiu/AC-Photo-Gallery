@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Welcome</title>
+  <link rel="stylesheet" type="text/css" href="/css/style.css" />
+</head>
+<body>
+
+  <header>
+    <nav>
+      <h3 id="logo">Explore</h3>
+      <img class="hamburger" onclick="menuclick()" src="../images/hamburger_icon.png" alt="menu" />
+      <div class="dropdown">
+          <div class="dropdown-link"><a href="/about">About</a></div>
+          <div class="dropdown-link"><a href="/gallery">Gallery</a></div>
+          <div class="dropdown-link"><a href="/journal">Journal</a></div>
+      </div>
+    </nav>
+
+    <section>
+    <div class="hero">
+      <img src="./images/forest.jpg" alt="">
+      <h1 class="headline">Explore</h1>
+    </div>
+    </section>
+
+  </header>
+
+  <div class="slider"></div>
+
+
+  <!-- <div id="gallery">
+      <p>
+        <strong>Hi everyone!</strong></br>
+        Thank you for visiting my page.
+        This experimental blog is meant for your enjoyment and for my learning.</br>
+        Please feel free to tour around and hopefully you'll find something interesting!</br>
+      - April
+    </p>
+  </div>
+  <div class="slider"></div>
+  <div id="output"></div>
+  <div class="footer"></div> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TimelineMax.min.js" integrity="sha256-v/YsEqWkVsiNHryCWg+vjC/eDBakMAgOsCJRa0kNPOg=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js" integrity="sha256-ABrLsV2caVEMCBfm3eNhv/CYQG+tGCqzw2f4b/Pag0M=" crossorigin="anonymous"></script>
+<script src="/scripts/script.js"></script>
+<!-- <input type="file" id="files" name="files[]" multiple /> -->
+<!-- <output id="list"></output> -->
+<!-- <button onclick=getText()>GetText</button> -->
+<!-- <button onclick=getUsers()>GetUsers</button> -->
+<!-- <button onclick=getImages()>GetImages</button> -->
+
+<script>
+
+function menuclick() {
+  document.querySelector(".dropdown").classList.toggle("show");
+  var dl = document.querySelectorAll(".dropdown-link");
+  dl.forEach(d => {
+    d.classList.toggle("show");
+  });
+}
+
+function getImages() {
+  fetch('/api')
+    .then((res) => res.json())
+    .then((data) => {
+      let output = '';
+      for (i in data) {
+        output += "<img class='picture-image' src='images/gallery/" + data[i] + "' />";
+      }
+      document.getElementById('gallery').innerHTML = output;
+    });
+}
+
+</script>
+<script>
+  function getUsers() {
+    fetch('user.json')
+      .then((res) => console.log(res.json()))
+      .then((data) => {
+        let output = '<h2>Users<h2>';
+        data.forEach(function(user){
+          output += `
+          <ul>
+            <li>ID: ${user.id}</li>
+            <li>Name: ${user.name}</li>
+            <li>Email: ${user.email}</li>
+          </ul>
+          `;
+        });
+        document.getElementById('output').innerHTML = output;
+      });
+
+  }
+
+  function getText() {
+    // fetch('sample.txt')
+    // .then(function(res){
+    //   console.log(res);
+    // })
+    // .then(function(data){
+    //   console.log(data);
+    // })
+    fetch('sample.txt')
+    .then((res) => console.log(res.text()))
+    .then((data) => console.log(data))
+    .catch((err) => console.log(err))
+  }
+
+  function handleFileSelect(evt) {
+    var files = evt.target.files; // FileList object
+
+    // files is a FileList of File objects. List some properties.
+    var output = [];
+    for (var i = 0, f; f = files[i]; i++) {
+      output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+                f.size, ' bytes, last modified: ',
+                f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
+                '</li>');
+    }
+    document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
+    // show images
+    var ps = [];
+    var g = document.getElementById("gallery");
+      for (var i = 0, f; f = files[i]; i++) {
+        if(f.type == 'video/mp4'){
+          var d = document.createElement("div");
+          d.className = "movie-div";
+          d.id = "movie-" + i;
+          d.innerHTML = "<video class='movie-clip' controls> <source src=\'images/gallery/" + f.name + "\' ></video>";
+          g.appendChild(d);
+        }
+        else{
+        var d = document.createElement("div");
+        d.className = "picture-div";
+        d.id = "picture-" + i;
+        d.innerHTML = "<img class='picture-image' src=\'images/gallery/" + f.name + "\' />";
+        g.appendChild(d);
+      }
+    }
+  }
+
+  //document.getElementById('files').addEventListener('change', handleFileSelect, false);
+
+</script>
+<script>
+  // function initPage() {
+  //
+  // }
+  // initPage();
+</script>
+</body>
+</html>
